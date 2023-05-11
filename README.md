@@ -1,2 +1,2 @@
-# planforgains
-Plan For Gains - No more boring meal prep
+# Plan for gains
+No more boring meal prep
