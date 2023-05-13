@@ -1,7 +1,4 @@
-import firebase_app from "../config";
-import { getAuth } from "firebase/auth";
-
-const auth = getAuth(firebase_app);
+import { auth } from '../config'
 
 export async function getCurrentUser() {
   let result = null,
@@ -12,7 +9,7 @@ export async function getCurrentUser() {
       result = {
         name: user.displayName || 'User',
         email: user.email,
-        imageUrl: user.photoURL || '/images/defaultProfilePic.png',
+        imageUrl: user.photoURL,
       };
     } else {
       error = "No user signed in";

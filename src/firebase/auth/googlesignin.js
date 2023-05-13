@@ -1,15 +1,16 @@
-// src/firebase/auth/googleSignIn.js
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import firebase_app from "../config";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { auth } from "../config";
+import { createUserProfileDocument } from "../firestore/createUserProfileDocument";
 
-const auth = getAuth(firebase_app);
 
-export default async function googleSignIn() {
+export default async function signInWithGoogle() {
   const provider = new GoogleAuthProvider();
   let result = null,
-      error = null;
+    error = null;
   try {
     result = await signInWithPopup(auth, provider);
+    console.log(`Signed in with Google as ${result.user.displayName}`);
+    await createUserProfileDocument(result.user);
   } catch (e) {
     error = e;
   }
