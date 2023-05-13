@@ -6,11 +6,6 @@ import { useRouter } from 'next/navigation'
 import { useEffect } from "react";
 import { getCurrentUser } from "@/firebase/auth/getCurrentUser";
 
-const metadata = {
-  title: "Home",
-  description: "Home page",
-}
-
 export default function Home() {
   const router = useRouter();
   useEffect(() => {
