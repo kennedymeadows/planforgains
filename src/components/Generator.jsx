@@ -1,20 +1,20 @@
 import { useState, useEffect } from "react";
 import RecipeCard from "@/components/RecipeCard";
 import FunFacts from "@/components/FunFacts";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 import { auth } from "@/firebase/config";
 import getDocument from "@/firebase/firestore/getData";
 
 export default function Generator() {
   const [mealPlan, setMealPlan] = useState({ recipes: [] });
   const [isLoading, setIsLoading] = useState(false);
-  const [dietPreference, setDietPreference] = useState("healthy");  // Default value
-  
+  const [dietPreference, setDietPreference] = useState("healthy"); // Default value
+
   useEffect(() => {
     const fetchUserDietPreference = async () => {
       const user = auth.currentUser;
       if (user) {
-        const { result, error } = await getDocument('users', user.uid);
+        const { result, error } = await getDocument("users", user.uid);
         if (error) {
           console.log(error);
           return;
@@ -29,12 +29,12 @@ export default function Generator() {
 
   const prompt = `
   You are going to write a JSON collection of recipes for a meal plan.
-  
+    
   Consider the following recipe specifications:
-  The meal plan will be made up of 2 protein recipes, 4 vegetable recipes, and 3 carb recipes. The recipes should be healthy, interesting, and fun. The recipes should fit a ${dietPreference} They should also be recipes that batch well and can be made in advance.
-  
+  The meal plan will be made up of 2 protein recipes, 4 vegetable recipes, and 3 carb recipes. The recipes should be healthy, interesting, and fun. The recipes should fit a ${dietPreference}. They should also be recipes that batch well and can be made in advance.
+    
   Now consider the following Typescript Interface for the JSON schema:
-  
+    
   interface Recipe {
       name: string;
       category: string; (protein, vegetable, carb)
@@ -46,9 +46,10 @@ export default function Generator() {
           carbs: number;
       }
   }
-  
+    
   Write the recipes section according to the Recipe schema. On the response, include only the JSON.
   `;
+
   const handleGenerateMealPlan = async () => {
     setIsLoading(true);
     setMealPlan({ recipes: [] });
@@ -62,7 +63,7 @@ export default function Generator() {
 
     const data = await response.json();
 
-    data.recipes = data.recipes.map(recipe => ({ ...recipe, id: uuidv4() }));
+    data.recipes = data.recipes.map((recipe) => ({ ...recipe, id: uuidv4() }));
 
     setMealPlan(data);
     setIsLoading(false);
@@ -95,8 +96,10 @@ export default function Generator() {
               <>
                 <div className="col-span-6 grid grid-cols-4 justify-center grid-rows-3">
                   <div className="col-span-2 col-start-2 row-span-1 row-start-1 text-base justify-center">
-                    <p className="text-center">It takes about 30 seconds to generate your meal prep...</p>
-                    </div>
+                    <p className="text-center">
+                      It takes about 30 seconds to generate your meal prep...
+                    </p>
+                  </div>
                   <div className="col-span-2 col-start-2 row-span-1 row-start-2">
                     <FunFacts />
                   </div>
@@ -111,8 +114,8 @@ export default function Generator() {
                   </h2>
                   <div className="grid grid-cols-3 gap-6">
                     {proteinRecipes.map((recipe) => (
-                      <div className="col-span-1">
-                        <RecipeCard key={recipe.id} recipe={recipe} />
+                      <div key={recipe.id} className="col-span-1">
+                        <RecipeCard recipe={recipe} />
                       </div>
                     ))}
                   </div>
@@ -122,8 +125,8 @@ export default function Generator() {
                   </h2>
                   <div className="grid grid-cols-3 gap-6">
                     {vegetableRecipes.map((recipe) => (
-                      <div className="col-span-1">
-                        <RecipeCard key={recipe.id} recipe={recipe} />
+                      <div key={recipe.id} className="col-span-1">
+                        <RecipeCard recipe={recipe} />
                       </div>
                     ))}
                   </div>
@@ -133,8 +136,8 @@ export default function Generator() {
                   </h2>
                   <div className="grid grid-cols-3 gap-6">
                     {carbRecipes.map((recipe) => (
-                      <div className="col-span-1">
-                        <RecipeCard key={recipe.id} recipe={recipe} />
+                      <div key={recipe.id} className="col-span-1">
+                        <RecipeCard recipe={recipe} />
                       </div>
                     ))}
                   </div>

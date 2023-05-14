@@ -10,9 +10,9 @@ export default function CTA() {
             Create your first meal plan today.
           </h2>
           <p className="mx-auto mt-6 max-w-xl text-lg leading-8 text-gray-600">
-            There's more to healthy eating than simply counting calories. Let us
+            There&apos;s more to healthy eating than simply counting calories. Let us
             help you actually reach your goals while enjoying variety and
-            finding new recipes you'll love.
+            finding new recipes you&apos;ll love.
           </p>
           <div className="mt-10 flex items-center justify-center gap-x-6">
             <Link
